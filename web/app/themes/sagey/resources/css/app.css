@@ -1,0 +1,19 @@
+@import "tailwindcss" theme(static);
+@source "../../app/**/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+  --color-dark-bg: #0A0F1C;
+  --color-dark-surface: #0F172A;
+  --color-dark-card: #1E293B;
+  --color-dark-border: #334155;
+  --color-sage-green: #86EFAC;
+  --color-sage-green-dim: #86EFAC20;
+  --color-sage-green-border: #86EFAC40;
+  --color-muted: #94A3B8;
+  --color-muted-dark: #64748B;
+  --color-muted-darker: #475569;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
