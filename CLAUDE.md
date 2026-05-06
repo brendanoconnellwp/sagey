@@ -108,6 +108,45 @@ To rotate the license: regenerate in the wpengine.com customer portal, update bo
 6. **Never** add `web/check-*.php` debug scripts to commits. Write them to `/tmp/`, copy in, run, delete.
 7. **Never** push to a shared branch without confirmation. Default is to commit locally.
 
+## Quality gates
+
+CI (`.github/workflows/ci.yml`) and pre-commit (`lefthook.yml`) enforce the same set of checks. Pre-commit is a fast local mirror of CI; CI is the contract.
+
+| Tool | Scope | Run locally |
+|---|---|---|
+| **Pint** (PSR-12 +) | All `.php` not under excludes (see `pint.json`) | `ddev composer lint:php` / `ddev composer lint:fix` |
+| **PHPStan** (level 5) | `web/app/themes/sagey/app` | `ddev composer analyse` |
+| **Pest** | `tests/` | `ddev composer test` |
+| **Stylelint** (config-standard-scss + BEM pattern) | `resources/scss/**/*.scss` | `ddev exec --dir /var/www/html/web/app/themes/sagey npm run lint:css` |
+| **ESLint** (v9 flat config + recommended) | `resources/js/**/*.js` + `*.config.js` | `npm run lint:js` |
+| **Prettier** | SCSS/JS/JSON | `npm run format:check` / `npm run format` |
+
+**Run everything at once:**
+```bash
+ddev composer lint && \
+ddev exec --dir /var/www/html/web/app/themes/sagey npm run lint && \
+ddev exec --dir /var/www/html/web/app/themes/sagey npm run build
+```
+
+### Pre-commit (Lefthook)
+
+Hooks are wired through `lefthook.yml`. To activate locally (one-time per clone):
+
+```bash
+brew install lefthook    # or: npm i -g lefthook  (https://lefthook.dev)
+lefthook install
+```
+
+Hooks invoke `ddev exec` for everything, so DDEV must be running for commits to pass. Bypass with `git commit --no-verify` when needed (and explain why in the message).
+
+### CI
+
+`.github/workflows/ci.yml` runs on push to `main` and on every PR. Two parallel jobs:
+- **PHP** — composer install (uses `ACF_PRO_KEY` repo secret for Pro download), Pint, PHPStan, Pest
+- **Frontend** — npm ci, Stylelint, ESLint, Prettier, Vite build
+
+**Required secret:** `ACF_PRO_KEY` (license key only) in repo settings → Secrets and variables → Actions. Without it, CI's PHP job will warn and skip ACF Pro install.
+
 ## Common workflows
 
 ### Add a Composer-managed plugin

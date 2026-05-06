@@ -2,8 +2,20 @@
   "preset": "per",
   "exclude": [
     "web/wp",
+    "web/app/cache",
     "web/app/mu-plugins/bedrock-disallow-indexing",
     "web/app/plugins",
-    "web/app/themes/twentytwentyfive"
-  ]
+    "web/app/themes/twentytwentyfive",
+    "web/app/themes/sagey/vendor",
+    "web/app/themes/sagey/node_modules",
+    "web/app/themes/sagey/public"
+  ],
+  "exclude-files": [
+    "web/wp-config-ddev.php",
+    "web/wp-config.php"
+  ],
+  "rules": {
+    "concat_space": { "spacing": "one" },
+    "trailing_comma_in_multiline": true
+  }
 }

@@ -3,8 +3,8 @@
 // =============================================================================
 
 // Neutral color scale --------------------------------------------------------
-$neutral-0:   #ffffff;
-$neutral-50:  #fafafa;
+$neutral-0: #fff;
+$neutral-50: #fafafa;
 $neutral-100: #f5f5f5;
 $neutral-200: #e5e5e5;
 $neutral-300: #d4d4d4;
@@ -17,109 +17,118 @@ $neutral-900: #171717;
 $neutral-950: #0a0a0a;
 
 // Accent color scale (placeholder — change for brand) ------------------------
-$accent-50:   #f0fdf4;
-$accent-100:  #dcfce7;
-$accent-200:  #bbf7d0;
-$accent-300:  #86efac;
-$accent-400:  #4ade80;
-$accent-500:  #22c55e;
-$accent-600:  #16a34a;
-$accent-700:  #15803d;
-$accent-800:  #166534;
-$accent-900:  #14532d;
-$accent-950:  #052e16;
+$accent-50: #f0fdf4;
+$accent-100: #dcfce7;
+$accent-200: #bbf7d0;
+$accent-300: #86efac;
+$accent-400: #4ade80;
+$accent-500: #22c55e;
+$accent-600: #16a34a;
+$accent-700: #15803d;
+$accent-800: #166534;
+$accent-900: #14532d;
+$accent-950: #052e16;
 
 // Spacing scale (rem-based, 4px = 0.25rem unit) ------------------------------
-$space-0:    0;
-$space-px:   1px;
-$space-0_5:  0.125rem;
-$space-1:    0.25rem;
-$space-2:    0.5rem;
-$space-3:    0.75rem;
-$space-4:    1rem;
-$space-5:    1.25rem;
-$space-6:    1.5rem;
-$space-8:    2rem;
-$space-10:   2.5rem;
-$space-12:   3rem;
-$space-16:   4rem;
-$space-20:   5rem;
-$space-24:   6rem;
-$space-32:   8rem;
-$space-40:   10rem;
-$space-48:   12rem;
+$space-0: 0;
+$space-px: 1px;
+$space-0_5: 0.125rem;
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-12: 3rem;
+$space-16: 4rem;
+$space-20: 5rem;
+$space-24: 6rem;
+$space-32: 8rem;
+$space-40: 10rem;
+$space-48: 12rem;
 
 // Type sizes -----------------------------------------------------------------
-$text-xs:    0.75rem;
-$text-sm:    0.875rem;
-$text-base:  1rem;
-$text-lg:    1.125rem;
-$text-xl:    1.25rem;
-$text-2xl:   1.5rem;
-$text-3xl:   1.875rem;
-$text-4xl:   2.25rem;
-$text-5xl:   3rem;
-$text-6xl:   3.75rem;
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.25rem;
+$text-5xl: 3rem;
+$text-6xl: 3.75rem;
 
 // Line heights ---------------------------------------------------------------
-$leading-none:    1;
-$leading-tight:   1.15;
-$leading-snug:    1.375;
-$leading-normal:  1.5;
+$leading-none: 1;
+$leading-tight: 1.15;
+$leading-snug: 1.375;
+$leading-normal: 1.5;
 $leading-relaxed: 1.625;
-$leading-loose:   2;
+$leading-loose: 2;
 
 // Font families --------------------------------------------------------------
-$font-sans:    'Inter', system-ui, -apple-system, sans-serif;
-$font-mono:    'JetBrains Mono', ui-monospace, monospace;
+$font-sans:
+  "Inter",
+  system-ui,
+  -apple-system,
+  sans-serif;
+$font-mono: "JetBrains Mono", ui-monospace, monospace;
 $font-heading: $font-sans;
-$font-body:    $font-sans;
+$font-body: $font-sans;
 
 // Radius scale ---------------------------------------------------------------
 $radius-none: 0;
-$radius-sm:   0.25rem;
-$radius-md:   0.5rem;
-$radius-lg:   1rem;
-$radius-xl:   1.5rem;
-$radius-2xl:  2rem;
+$radius-sm: 0.25rem;
+$radius-md: 0.5rem;
+$radius-lg: 1rem;
+$radius-xl: 1.5rem;
+$radius-2xl: 2rem;
 $radius-full: 9999px;
 
 // Shadows --------------------------------------------------------------------
-$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-md:
+  0 4px 6px -1px rgb(0 0 0 / 0.07),
+  0 2px 4px -2px rgb(0 0 0 / 0.05);
+$shadow-lg:
+  0 10px 15px -3px rgb(0 0 0 / 0.08),
+  0 4px 6px -4px rgb(0 0 0 / 0.05);
+$shadow-xl:
+  0 20px 25px -5px rgb(0 0 0 / 0.1),
+  0 8px 10px -6px rgb(0 0 0 / 0.05);
 
 // Motion ---------------------------------------------------------------------
 $duration-fast: 150ms;
 $duration-base: 200ms;
 $duration-slow: 300ms;
-$ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
-$ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
-
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 $transition-fast: $duration-fast $ease-out;
 $transition-base: $duration-base $ease-out;
 $transition-slow: $duration-slow $ease-out;
 
 // Z-index scale --------------------------------------------------------------
-$z-base:     0;
-$z-raised:   10;
+$z-base: 0;
+$z-raised: 10;
 $z-dropdown: 20;
-$z-sticky:   30;
-$z-overlay:  40;
-$z-modal:    50;
-$z-toast:    60;
+$z-sticky: 30;
+$z-overlay: 40;
+$z-modal: 50;
+$z-toast: 60;
 
 // Breakpoints (SCSS-only — cannot be CSS custom properties in @media) --------
-$bp-sm: 40rem;  // 640px
-$bp-md: 48rem;  // 768px
-$bp-lg: 64rem;  // 1024px
-$bp-xl: 80rem;  // 1280px
+$bp-sm: 40rem; // 640px
+$bp-md: 48rem; // 768px
+$bp-lg: 64rem; // 1024px
+$bp-xl: 80rem; // 1280px
 
 // Layout ---------------------------------------------------------------------
-$container-narrow:  48rem;   // 768px  — long-form text
-$container-width:   72rem;   // 1152px — default
-$container-wide:    90rem;   // 1440px — galleries, hero rows
+$container-narrow: 48rem; // 768px  — long-form text
+$container-width: 72rem; // 1152px — default
+$container-wide: 90rem; // 1440px — galleries, hero rows
 $container-padding: $space-6;
 
 // =============================================================================
@@ -127,26 +136,26 @@ $container-padding: $space-6;
 // =============================================================================
 
 // Color — surface ------------------------------------------------------------
-$color-bg:        $neutral-0;
+$color-bg: $neutral-0;
 $color-bg-subtle: $neutral-50;
-$color-bg-muted:  $neutral-100;
+$color-bg-muted: $neutral-100;
 
 // Color — text ---------------------------------------------------------------
-$color-fg:         $neutral-950;
-$color-fg-strong:  $neutral-950;
-$color-muted:      $neutral-600;
+$color-fg: $neutral-950;
+$color-fg-strong: $neutral-950;
+$color-muted: $neutral-600;
 $color-muted-soft: $neutral-400;
 
 // Color — borders ------------------------------------------------------------
-$color-border:        $neutral-200;
+$color-border: $neutral-200;
 $color-border-strong: $neutral-300;
 
 // Color — accent (monochrome by default; swap to $accent-600 for brand color)-
-$color-accent:       $neutral-950;
-$color-accent-fg:    $neutral-0;
+$color-accent: $neutral-950;
+$color-accent-fg: $neutral-0;
 $color-accent-hover: $neutral-700;
 
 // Type aliases retained for back-compat -------------------------------------
-$font-size-base:    $text-base;
-$line-height-base:  $leading-relaxed;
+$font-size-base: $text-base;
+$line-height-base: $leading-relaxed;
 $line-height-tight: $leading-tight;

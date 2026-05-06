@@ -1,4 +1,9 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
-.container { @include container; }
-.container--narrow { @include container($container-narrow); }
+.container {
+  @include container;
+}
+
+.container--narrow {
+  @include container($container-narrow);
+}

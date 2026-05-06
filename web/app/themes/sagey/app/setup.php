@@ -68,8 +68,8 @@ add_filter('should_load_separate_core_block_assets', '__return_false');
 /**
  * Register custom blocks.
  */
-add_action('init', fn () => \App\Blocks\Hero::register());
-add_action('acf/init', fn () => \App\Blocks\Hero::registerFields());
+add_action('init', fn() => \App\Blocks\Hero::register());
+add_action('acf/init', fn() => \App\Blocks\Hero::registerFields());
 
 /**
  * Register the initial theme setup.

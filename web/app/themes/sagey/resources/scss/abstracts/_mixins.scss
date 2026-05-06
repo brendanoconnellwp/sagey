@@ -1,11 +1,25 @@
-@use 'variables' as v;
+@use "variables" as v;
 
 @mixin respond-to($bp) {
-  @if $bp == sm { @media (min-width: v.$bp-sm) { @content; } }
-  @else if $bp == md { @media (min-width: v.$bp-md) { @content; } }
-  @else if $bp == lg { @media (min-width: v.$bp-lg) { @content; } }
-  @else if $bp == xl { @media (min-width: v.$bp-xl) { @content; } }
-  @else { @error "Unknown breakpoint: #{$bp}"; }
+  @if $bp == sm {
+    @media (min-width: v.$bp-sm) {
+      @content;
+    }
+  } @else if $bp == md {
+    @media (min-width: v.$bp-md) {
+      @content;
+    }
+  } @else if $bp == lg {
+    @media (min-width: v.$bp-lg) {
+      @content;
+    }
+  } @else if $bp == xl {
+    @media (min-width: v.$bp-xl) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$bp}";
+  }
 }
 
 @mixin container($width: v.$container-width) {

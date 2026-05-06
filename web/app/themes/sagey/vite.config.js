@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
-import laravel from 'laravel-vite-plugin'
-import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin'
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
 
-if (! process.env.APP_URL) {
-  process.env.APP_URL = 'http://sageroots.local'
+if (!process.env.APP_URL) {
+  process.env.APP_URL = 'http://sageroots.local';
 }
 
 export default defineConfig({
@@ -44,4 +44,4 @@ export default defineConfig({
       '@images': '/resources/images',
     },
   },
-})
+});

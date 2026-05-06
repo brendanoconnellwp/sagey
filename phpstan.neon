@@ -1,0 +1,20 @@
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+  level: 5
+  paths:
+    - web/app/themes/sagey/app
+  bootstrapFiles:
+    - vendor/php-stubs/acf-pro-stubs/acf-pro-stubs.php
+    - web/app/themes/sagey/vendor/autoload.php
+  scanDirectories:
+    - web/app/themes/sagey/vendor/roots/acorn/src
+    - web/app/themes/sagey/vendor/illuminate
+  scanFiles:
+    - .phpstan/acorn-stubs.php
+  excludePaths:
+    - web/app/themes/sagey/vendor
+    - web/app/themes/sagey/node_modules
+    - web/app/themes/sagey/public
+  treatPhpDocTypesAsCertain: false

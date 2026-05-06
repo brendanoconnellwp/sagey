@@ -1,0 +1,41 @@
+# Lefthook — pre-commit quality gates.
+#
+# Install once: `brew install lefthook` (or `npm i -g lefthook`, see https://lefthook.dev)
+# Then in the repo: `lefthook install`
+#
+# All commands run inside DDEV (host has no PHP/Node). Skip a hook for one
+# commit with `LEFTHOOK=0 git commit ...` or `git commit --no-verify`.
+
+pre-commit:
+  parallel: true
+  commands:
+    php-lint:
+      tags: php
+      glob: "**/*.php"
+      run: ddev exec vendor/bin/pint --test {staged_files}
+
+    phpstan:
+      tags: php
+      glob: "web/app/themes/sagey/app/**/*.php"
+      run: ddev exec vendor/bin/phpstan analyse --memory-limit=512M --no-progress
+
+    stylelint:
+      tags: css
+      glob: "web/app/themes/sagey/resources/scss/**/*.scss"
+      run: ddev exec --dir /var/www/html/web/app/themes/sagey npm run lint:css --silent
+
+    eslint:
+      tags: js
+      glob: "web/app/themes/sagey/resources/js/**/*.js"
+      run: ddev exec --dir /var/www/html/web/app/themes/sagey npm run lint:js --silent
+
+    prettier:
+      tags: format
+      glob: "web/app/themes/sagey/resources/**/*.{js,scss,json}"
+      run: ddev exec --dir /var/www/html/web/app/themes/sagey npm run format:check --silent
+
+pre-push:
+  commands:
+    full-lint:
+      tags: php
+      run: ddev composer lint

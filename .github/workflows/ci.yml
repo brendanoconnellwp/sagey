@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP — Pint + PHPStan + Pest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+
+      - name: Configure ACF Pro auth
+        env:
+          ACF_PRO_KEY: ${{ secrets.ACF_PRO_KEY }}
+        if: env.ACF_PRO_KEY != ''
+        run: |
+          composer config --global --auth http-basic.connect.advancedcustomfields.com "$ACF_PRO_KEY" "https://github.com/${{ github.repository }}"
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: |
+            vendor
+            ~/.composer/cache
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install PHP dependencies
+        run: |
+          if [ -n "${{ secrets.ACF_PRO_KEY }}" ]; then
+            composer install --no-interaction --no-progress --prefer-dist
+          else
+            # Fallback when ACF_PRO_KEY isn't configured (e.g. forks)
+            composer install --no-interaction --no-progress --prefer-dist \
+              --ignore-platform-reqs || true
+            echo "::warning::ACF_PRO_KEY secret not set; skipping ACF Pro install."
+          fi
+
+      - name: Pint (PHP code style)
+        run: composer lint:php
+
+      - name: PHPStan (static analysis)
+        run: composer analyse
+
+      - name: Pest (tests)
+        run: composer test
+        if: hashFiles('tests/**') != ''
+
+  frontend:
+    name: Frontend — Stylelint + ESLint + Prettier + Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web/app/themes/sagey
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: web/app/themes/sagey/package-lock.json
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Stylelint (SCSS)
+        run: npm run lint:css
+
+      - name: ESLint (JS)
+        run: npm run lint:js
+
+      - name: Prettier (formatting)
+        run: npm run format:check
+
+      - name: Vite build
+        run: npm run build

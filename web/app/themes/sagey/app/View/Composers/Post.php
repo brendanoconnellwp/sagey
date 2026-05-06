@@ -9,7 +9,7 @@ class Post extends Composer
     /**
      * List of views served by this composer.
      *
-     * @var array
+     * @var array<string>
      */
     protected static $views = [
         'partials.page-header',
@@ -60,7 +60,7 @@ class Post extends Composer
     {
         return wp_link_pages([
             'echo' => 0,
-            'before' => '<p>'.__('Pages:', 'sage'),
+            'before' => '<p>' . __('Pages:', 'sage'),
             'after' => '</p>',
         ]);
     }

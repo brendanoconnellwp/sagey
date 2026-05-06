@@ -8,6 +8,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "npm run lint:css && npm run lint:js && npm run format:check",
+    "lint:css": "stylelint \"resources/scss/**/*.scss\"",
+    "lint:css:fix": "stylelint \"resources/scss/**/*.scss\" --fix",
+    "lint:js": "eslint \"resources/js/**/*.js\" \"*.config.js\"",
+    "lint:js:fix": "eslint \"resources/js/**/*.js\" \"*.config.js\" --fix",
+    "format": "prettier --write \"resources/**/*.{js,scss,json}\" \"*.{js,json}\"",
+    "format:check": "prettier --check \"resources/**/*.{js,scss,json}\" \"*.{js,json}\"",
     "translate": "npm run translate:pot && npm run translate:update",
     "translate:pot": "wp i18n make-pot . ./resources/lang/sage.pot --include=\"theme.json,patterns,app,resources\"",
     "translate:update": "for file in ./resources/lang/*.po; do wp i18n update-po ./resources/lang/sage.pot $file; done",
@@ -16,9 +23,17 @@
     "translate:mo": "wp i18n make-mo ./resources/lang ./resources/lang"
   },
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
     "@roots/vite-plugin": "^1.0.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.14.0",
     "laravel-vite-plugin": "^2.0.0",
+    "prettier": "^3.4.0",
     "sass-embedded": "^1.83.0",
+    "stylelint": "^16.13.0",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "stylelint-prettier": "^5.0.3",
     "vite": "^7.0.0"
   }
 }

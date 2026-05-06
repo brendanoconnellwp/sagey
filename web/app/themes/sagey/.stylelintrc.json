@@ -1,0 +1,27 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-prettier/recommended"],
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$",
+      {
+        "message": "Class names must follow BEM (block__element--modifier, kebab-case)"
+      }
+    ],
+    "scss/dollar-variable-pattern": [
+      "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$",
+      {
+        "message": "SCSS variables must be kebab-case (allow underscore for fractions like $space-0_5)"
+      }
+    ],
+    "no-descending-specificity": null,
+    "scss/at-import-partial-extension": null,
+    "scss/load-no-partial-leading-underscore": null,
+    "color-function-notation": "modern",
+    "alpha-value-notation": "number",
+    "value-keyword-case": [
+      "lower",
+      { "ignoreKeywords": ["optimizeLegibility", "optimizeSpeed", "geometricPrecision"] }
+    ]
+  },
+  "ignoreFiles": ["node_modules/**", "public/build/**", "vendor/**"]
+}

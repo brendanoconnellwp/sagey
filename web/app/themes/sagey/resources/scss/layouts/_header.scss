@@ -1,4 +1,4 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .skip-link {
   @include visually-hidden;
@@ -24,6 +24,7 @@
 
   &__inner {
     @include container;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,6 +44,8 @@
     margin: 0;
     padding: 0;
 
-    a { text-decoration: none; }
+    a {
+      text-decoration: none;
+    }
   }
 }

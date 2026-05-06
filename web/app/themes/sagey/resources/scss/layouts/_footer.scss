@@ -1,4 +1,4 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 .site-footer {
   border-top: 1px solid $color-border;
@@ -7,5 +7,7 @@
   color: $color-muted;
   font-size: 0.875rem;
 
-  &__inner { @include container; }
+  &__inner {
+    @include container;
+  }
 }
