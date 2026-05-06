@@ -3,6 +3,7 @@ includes:
 
 parameters:
   level: 5
+  phpVersion: 80300
   paths:
     - web/app/themes/sagey/app
   bootstrapFiles:
@@ -14,7 +15,8 @@ parameters:
   scanFiles:
     - .phpstan/acorn-stubs.php
   excludePaths:
-    - web/app/themes/sagey/vendor
-    - web/app/themes/sagey/node_modules
-    - web/app/themes/sagey/public
+    # Vendor must be excluded from scan, otherwise Laravel's helpers (notably __())
+    # collide with WordPress's same-named functions and produce false positives.
+    - web/app/themes/sagey/vendor (?)
+    - web/app/themes/sagey/public (?)
   treatPhpDocTypesAsCertain: false

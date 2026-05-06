@@ -17,7 +17,7 @@ pre-commit:
     phpstan:
       tags: php
       glob: "web/app/themes/sagey/app/**/*.php"
-      run: ddev exec vendor/bin/phpstan analyse --memory-limit=512M --no-progress
+      run: ddev exec vendor/bin/phpstan analyse --memory-limit=1G --no-progress
 
     stylelint:
       tags: css
