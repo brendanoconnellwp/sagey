@@ -1,0 +1,142 @@
+// =============================================================================
+// CSS custom property emission — mirrors SCSS tokens for runtime use
+// (block editor previews, JS, theme switching, theme.json bridges).
+//
+// SCSS variables remain the source of truth and the preferred reference
+// in component partials (compile-time, supports Sass color functions).
+// Reach for var(--token) only when runtime queryability matters.
+// =============================================================================
+
+@use 'variables' as *;
+
+:root {
+  // Neutral scale ----------------------------------------------------------
+  --neutral-0:   #{$neutral-0};
+  --neutral-50:  #{$neutral-50};
+  --neutral-100: #{$neutral-100};
+  --neutral-200: #{$neutral-200};
+  --neutral-300: #{$neutral-300};
+  --neutral-400: #{$neutral-400};
+  --neutral-500: #{$neutral-500};
+  --neutral-600: #{$neutral-600};
+  --neutral-700: #{$neutral-700};
+  --neutral-800: #{$neutral-800};
+  --neutral-900: #{$neutral-900};
+  --neutral-950: #{$neutral-950};
+
+  // Accent scale -----------------------------------------------------------
+  --accent-50:   #{$accent-50};
+  --accent-100:  #{$accent-100};
+  --accent-200:  #{$accent-200};
+  --accent-300:  #{$accent-300};
+  --accent-400:  #{$accent-400};
+  --accent-500:  #{$accent-500};
+  --accent-600:  #{$accent-600};
+  --accent-700:  #{$accent-700};
+  --accent-800:  #{$accent-800};
+  --accent-900:  #{$accent-900};
+  --accent-950:  #{$accent-950};
+
+  // Semantic — surface -----------------------------------------------------
+  --color-bg:        #{$color-bg};
+  --color-bg-subtle: #{$color-bg-subtle};
+  --color-bg-muted:  #{$color-bg-muted};
+
+  // Semantic — text --------------------------------------------------------
+  --color-fg:         #{$color-fg};
+  --color-fg-strong:  #{$color-fg-strong};
+  --color-muted:      #{$color-muted};
+  --color-muted-soft: #{$color-muted-soft};
+
+  // Semantic — borders -----------------------------------------------------
+  --color-border:        #{$color-border};
+  --color-border-strong: #{$color-border-strong};
+
+  // Semantic — accent ------------------------------------------------------
+  --color-accent:       #{$color-accent};
+  --color-accent-fg:    #{$color-accent-fg};
+  --color-accent-hover: #{$color-accent-hover};
+
+  // Spacing ----------------------------------------------------------------
+  --space-0:   #{$space-0};
+  --space-px:  #{$space-px};
+  --space-0_5: #{$space-0_5};
+  --space-1:   #{$space-1};
+  --space-2:   #{$space-2};
+  --space-3:   #{$space-3};
+  --space-4:   #{$space-4};
+  --space-5:   #{$space-5};
+  --space-6:   #{$space-6};
+  --space-8:   #{$space-8};
+  --space-10:  #{$space-10};
+  --space-12:  #{$space-12};
+  --space-16:  #{$space-16};
+  --space-20:  #{$space-20};
+  --space-24:  #{$space-24};
+  --space-32:  #{$space-32};
+  --space-40:  #{$space-40};
+  --space-48:  #{$space-48};
+
+  // Type sizes -------------------------------------------------------------
+  --text-xs:   #{$text-xs};
+  --text-sm:   #{$text-sm};
+  --text-base: #{$text-base};
+  --text-lg:   #{$text-lg};
+  --text-xl:   #{$text-xl};
+  --text-2xl:  #{$text-2xl};
+  --text-3xl:  #{$text-3xl};
+  --text-4xl:  #{$text-4xl};
+  --text-5xl:  #{$text-5xl};
+  --text-6xl:  #{$text-6xl};
+
+  // Line heights -----------------------------------------------------------
+  --leading-none:    #{$leading-none};
+  --leading-tight:   #{$leading-tight};
+  --leading-snug:    #{$leading-snug};
+  --leading-normal:  #{$leading-normal};
+  --leading-relaxed: #{$leading-relaxed};
+  --leading-loose:   #{$leading-loose};
+
+  // Font families ----------------------------------------------------------
+  --font-sans:    #{$font-sans};
+  --font-mono:    #{$font-mono};
+  --font-heading: #{$font-heading};
+  --font-body:    #{$font-body};
+
+  // Radius -----------------------------------------------------------------
+  --radius-none: #{$radius-none};
+  --radius-sm:   #{$radius-sm};
+  --radius-md:   #{$radius-md};
+  --radius-lg:   #{$radius-lg};
+  --radius-xl:   #{$radius-xl};
+  --radius-2xl:  #{$radius-2xl};
+  --radius-full: #{$radius-full};
+
+  // Shadows ----------------------------------------------------------------
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+
+  // Motion -----------------------------------------------------------------
+  --duration-fast: #{$duration-fast};
+  --duration-base: #{$duration-base};
+  --duration-slow: #{$duration-slow};
+  --ease-out:      #{$ease-out};
+  --ease-in-out:   #{$ease-in-out};
+
+  // Layout -----------------------------------------------------------------
+  --container-narrow:  #{$container-narrow};
+  --container-width:   #{$container-width};
+  --container-wide:    #{$container-wide};
+  --container-padding: #{$container-padding};
+
+  // Z-index ----------------------------------------------------------------
+  --z-base:     #{$z-base};
+  --z-raised:   #{$z-raised};
+  --z-dropdown: #{$z-dropdown};
+  --z-sticky:   #{$z-sticky};
+  --z-overlay:  #{$z-overlay};
+  --z-modal:    #{$z-modal};
+  --z-toast:    #{$z-toast};
+}

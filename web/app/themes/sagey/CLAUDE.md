@@ -86,21 +86,62 @@ resources/scss/
 ├── app.scss                  # @use abstracts; @use base; @use layouts; @use components;
 ├── editor.scss               # block-editor styles
 ├── abstracts/
-│   ├── _variables.scss       # colors, spacing scale, breakpoints, type, motion
+│   ├── _variables.scss       # SCSS tokens — primitives + semantic aliases
+│   ├── _tokens.scss          # mirrors variables to :root CSS custom properties
 │   ├── _mixins.scss          # respond-to, container, focus-ring, visually-hidden
-│   └── _index.scss           # @forward both
+│   └── _index.scss           # @forward variables, mixins, tokens
 ├── base/                     # _reset, _typography, _index
 ├── layouts/                  # _container, _header, _footer, _index
 └── components/               # _button, _hero, _index — one partial per UI thing
 ```
 
+### Design tokens (dual-layer)
+
+Tokens are defined **once** in `abstracts/_variables.scss` (Sass scalars) and **mirrored** to `:root` CSS custom properties by `abstracts/_tokens.scss`. SCSS variables are the source of truth.
+
+**Two layers of tokens:**
+
+- **Primitive tokens** — raw scales:
+  - Color: `$neutral-0…$neutral-950`, `$accent-50…$accent-950`
+  - Spacing: `$space-0`, `$space-px`, `$space-0_5`, `$space-1`…`$space-48`
+  - Type: `$text-xs`…`$text-6xl`, `$leading-{none,tight,snug,normal,relaxed,loose}`
+  - Radius: `$radius-{none,sm,md,lg,xl,2xl,full}`
+  - Shadows: `$shadow-{sm,md,lg,xl}`
+  - Motion: `$duration-{fast,base,slow}`, `$ease-{out,in-out}`
+  - Z-index: `$z-{base,raised,dropdown,sticky,overlay,modal,toast}`
+  - Layout: `$container-{narrow,width,wide}`, `$container-padding`
+  - Breakpoints: `$bp-{sm,md,lg,xl}` — **SCSS only**, can't be CSS custom properties (media queries don't accept them)
+
+- **Semantic tokens** — the component API; alias to primitives:
+  - Surface: `$color-bg`, `$color-bg-subtle`, `$color-bg-muted`
+  - Text: `$color-fg`, `$color-fg-strong`, `$color-muted`, `$color-muted-soft`
+  - Borders: `$color-border`, `$color-border-strong`
+  - Accent: `$color-accent`, `$color-accent-fg`, `$color-accent-hover`
+  - Type: `$font-sans`, `$font-mono`, `$font-heading`, `$font-body`
+
+**Brand changes happen at the semantic layer** — to rebrand, edit `$color-accent` (or point it at `$accent-600` instead of `$neutral-950`); leave primitives alone.
+
+### When to use SCSS variable vs CSS custom property
+
+- **In SCSS partials** — prefer `$color-fg`. Compile-time, supports Sass color functions (e.g. `color.adjust($color-accent, $lightness: 5%)`), survives static analysis.
+- **In runtime contexts** (block editor JS, dark-mode toggle, theme.json bridge, ad-hoc inline styles) — use `var(--color-fg)`. Same value, queryable and overridable at runtime.
+- **Components default to SCSS variables** — drop down to `var(--token)` only when runtime override is the actual goal.
+
+### Adding a new token
+
+1. Declare in `abstracts/_variables.scss` (in the right section — primitive or semantic).
+2. Mirror in `abstracts/_tokens.scss` — `--my-token: #{$my-token};` inside `:root`.
+3. Done — both `$my-token` and `var(--my-token)` are available.
+
+Skip step 2 only for breakpoints (don't work in `@media`) and SCSS-only constructs.
+
 ### SCSS rules
 
 - One partial per component, named after it. Use BEM (`.hero`, `.hero__inner`, `.hero--align-center`).
 - Import shared tokens with `@use '../abstracts' as *;` — gives flat access to variables and mixins.
-- New token? Add to `abstracts/_variables.scss` (or `_mixins.scss`), forward via `_index.scss`.
 - Breakpoints: use the `respond-to($name)` mixin (`sm`/`md`/`lg`/`xl`), not raw media queries.
-- Container widths: use the `container($width)` mixin or `.container` / `.container--narrow` classes.
+- Container widths: use the `container($width)` mixin or `.container` / `.container--narrow` / `.container--wide` classes.
+- **Never hardcode** hex/px/rem values when a token exists. If no token fits, add one (see above) — don't reach for raw values.
 - No CSS-in-PHP, no inline `style="..."`, no `<style>` blocks in Blade.
 
 ## ACF Pro Block pattern (canonical: Hero)
