@@ -32,6 +32,14 @@
         "wp-plugin/*",
         "wp-theme/*"
       ]
+    },
+    {
+      "name": "acf-pro",
+      "type": "composer",
+      "url": "https://connect.advancedcustomfields.com",
+      "only": [
+        "wpengine/advanced-custom-fields-pro"
+      ]
     }
   ],
   "require": {
@@ -43,7 +51,8 @@
     "roots/wordpress": "6.9.4",
     "roots/wp-config": "1.0.0",
     "vlucas/phpdotenv": "^5.5",
-    "wp-theme/twentytwentyfive": "^1.0"
+    "wp-theme/twentytwentyfive": "^1.0",
+    "wpengine/advanced-custom-fields-pro": "^6.8"
   },
   "require-dev": {
     "laravel/pint": "^1.27",

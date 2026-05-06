@@ -1,0 +1,48 @@
+@use '../abstracts' as *;
+
+.skip-link {
+  @include visually-hidden;
+
+  &:focus,
+  &:focus-visible {
+    position: absolute;
+    top: $space-2;
+    left: $space-2;
+    width: auto;
+    height: auto;
+    padding: $space-2 $space-4;
+    background: $color-fg;
+    color: $color-bg;
+    clip: auto;
+    z-index: 100;
+  }
+}
+
+.site-header {
+  border-bottom: 1px solid $color-border;
+  padding-block: $space-6;
+
+  &__inner {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-6;
+  }
+
+  &__brand {
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+  }
+
+  &__nav .nav {
+    display: flex;
+    gap: $space-6;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a { text-decoration: none; }
+  }
+}

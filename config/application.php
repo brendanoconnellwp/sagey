@@ -96,6 +96,11 @@ Config::define('WP_HOME', env('WP_HOME'));
 Config::define('WP_SITEURL', env('WP_SITEURL'));
 
 /**
+ * ACF Pro license (auto-activates the install)
+ */
+Config::define('ACF_PRO_LICENSE', env('ACF_PRO_LICENSE'));
+
+/**
  * Custom Content Directory
  */
 Config::define('CONTENT_DIR', '/app');

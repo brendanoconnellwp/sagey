@@ -1,0 +1,11 @@
+@use '../abstracts' as *;
+
+.site-footer {
+  border-top: 1px solid $color-border;
+  padding-block: $space-12;
+  margin-top: $space-24;
+  color: $color-muted;
+  font-size: 0.875rem;
+
+  &__inner { @include container; }
+}

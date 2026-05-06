@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Vite;
  * @return array
  */
 add_filter('block_editor_settings_all', function ($settings) {
-    $style = Vite::asset('resources/css/editor.css');
+    $style = Vite::asset('resources/scss/editor.scss');
 
     $settings['styles'][] = [
         'css' => "@import url('{$style}')",
@@ -64,6 +64,12 @@ add_filter('theme_file_path', function ($path, $file) {
  * @link https://core.trac.wordpress.org/ticket/61965
  */
 add_filter('should_load_separate_core_block_assets', '__return_false');
+
+/**
+ * Register custom blocks.
+ */
+add_action('init', fn () => \App\Blocks\Hero::register());
+add_action('acf/init', fn () => \App\Blocks\Hero::registerFields());
 
 /**
  * Register the initial theme setup.

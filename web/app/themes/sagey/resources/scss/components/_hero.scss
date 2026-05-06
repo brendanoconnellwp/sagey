@@ -1,0 +1,37 @@
+@use '../abstracts' as *;
+
+.hero {
+  padding-block: $space-24;
+
+  @include respond-to(md) { padding-block: $space-32; }
+
+  &__inner {
+    @include container($container-narrow);
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+  }
+
+  &--align-center &__inner { align-items: center; text-align: center; }
+  &--align-left &__inner   { align-items: flex-start; text-align: left; }
+
+  &__heading {
+    font-size: clamp(2.25rem, 5vw + 1rem, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  &__subheading {
+    font-size: 1.125rem;
+    color: $color-muted;
+    max-width: 40rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+    margin-top: $space-2;
+  }
+}

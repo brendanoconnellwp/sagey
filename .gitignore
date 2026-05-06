@@ -31,6 +31,9 @@ web/.htaccess
 /vendor
 auth.json
 
+# Claude Code (per-user permission allowlist)
+.claude/settings.local.json
+
 # PHPUnit/Pest
 phpunit.xml
 .phpunit.result.cache
