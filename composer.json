@@ -55,6 +55,7 @@
     "wpengine/advanced-custom-fields-pro": "^6.8"
   },
   "require-dev": {
+    "brain/monkey": "^2.7",
     "laravel/pint": "^1.27",
     "pestphp/pest": "^4.0",
     "php-stubs/acf-pro-stubs": "^6.5",

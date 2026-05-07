@@ -14,6 +14,7 @@
  *   resources/blocks/{kebab}/block.json       ← block metadata, ACF renderCallback
  *   resources/views/blocks/{kebab}.blade.php  ← template
  *   resources/scss/components/_{kebab}.scss   ← styles
+ *   tests/Theme/Blocks/{Pascal}Test.php       ← Pest render + registration test
  *
  * Mutates:
  *   resources/scss/components/_index.scss     ← appends @forward
@@ -29,6 +30,7 @@ import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const themeRoot = resolve(here, '..');
+const projectRoot = resolve(themeRoot, '../../../..');
 
 // ---- Argv ------------------------------------------------------------------
 
@@ -168,20 +170,69 @@ const scssPartial = `@use "../abstracts" as *;
 }
 `;
 
+const pestTest = `<?php
+
+/*
+ * ${pascal} block render test.
+ *
+ * Mocks ACF's get_field and the view() helper, asserts the render method
+ * forwards the right data to the blocks.${kebab} Blade view. Extend the
+ * field map and assertions below as you add fields to the block.
+ */
+
+use App\\Blocks\\${pascal};
+use Brain\\Monkey\\Functions;
+
+it('passes ACF fields to the blocks.${kebab} view', function (): void {
+    Functions\\expect('get_field')
+        ->andReturnUsing(fn (string $name) => match ($name) {
+            'heading' => 'Test heading',
+            default => null,
+        });
+
+    mockView('blocks.${kebab}', function (array $data): void {
+        expect($data)
+            ->toHaveKey('heading', 'Test heading')
+            ->toHaveKey('block')
+            ->toHaveKey('is_preview', false);
+    });
+
+    ob_start();
+    ${pascal}::render(['name' => 'acf/${kebab}'], '', false, 0);
+    ob_end_clean();
+});
+
+it('registers the block', function (): void {
+    Functions\\expect('get_theme_file_path')
+        ->once()
+        ->with('resources/blocks/${kebab}/block.json')
+        ->andReturn('/dev/null/block.json');
+
+    Functions\\expect('register_block_type')
+        ->once()
+        ->with('/dev/null/block.json');
+
+    ${pascal}::register();
+
+    expect(true)->toBeTrue();
+});
+`;
+
 // ---- Write files -----------------------------------------------------------
 
 const targets = [
-  { path: `app/Blocks/${pascal}.php`, contents: phpClass },
-  { path: `resources/blocks/${kebab}/block.json`, contents: blockJson },
-  { path: `resources/views/blocks/${kebab}.blade.php`, contents: bladeView },
-  { path: `resources/scss/components/_${kebab}.scss`, contents: scssPartial },
+  { root: themeRoot, path: `app/Blocks/${pascal}.php`, contents: phpClass },
+  { root: themeRoot, path: `resources/blocks/${kebab}/block.json`, contents: blockJson },
+  { root: themeRoot, path: `resources/views/blocks/${kebab}.blade.php`, contents: bladeView },
+  { root: themeRoot, path: `resources/scss/components/_${kebab}.scss`, contents: scssPartial },
+  { root: projectRoot, path: `tests/Theme/Blocks/${pascal}Test.php`, contents: pestTest },
 ];
 
 const created = [];
 const skipped = [];
 
-for (const { path, contents } of targets) {
-  const full = resolve(themeRoot, path);
+for (const { root, path, contents } of targets) {
+  const full = resolve(root, path);
   if (existsSync(full)) {
     skipped.push(path);
     continue;
@@ -241,5 +292,5 @@ if (setupUpdated) console.log(`  inserted ${pascal}::class into setup.php`);
 
 console.log('\n  next:');
 console.log('    1. npm run format && npm run lint');
-console.log('    2. ddev composer lint:fix && ddev composer analyse');
+console.log('    2. ddev composer lint:fix && ddev composer analyse && ddev composer test');
 console.log('    3. open the editor and search the inserter for "' + title + '"');
