@@ -4,7 +4,7 @@
   "name": "sage/hero",
   "title": "Hero",
   "description": "A full-width hero with heading, subheading, and call-to-action.",
-  "category": "design",
+  "category": "sagey",
   "icon": "cover-image",
   "keywords": ["hero", "banner", "intro"],
   "textdomain": "sage",

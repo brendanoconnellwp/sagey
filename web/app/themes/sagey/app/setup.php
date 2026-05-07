@@ -66,10 +66,32 @@ add_filter('theme_file_path', function ($path, $file) {
 add_filter('should_load_separate_core_block_assets', '__return_false');
 
 /**
- * Register custom blocks.
+ * Register a custom block category for Sagey blocks.
+ * Prepended so it appears at the top of the editor inserter.
  */
-add_action('init', fn() => \App\Blocks\Hero::register());
-add_action('acf/init', fn() => \App\Blocks\Hero::registerFields());
+add_filter('block_categories_all', function ($categories) {
+    return array_merge(
+        [['slug' => 'sagey', 'title' => __('Sagey', 'sage'), 'icon' => null]],
+        $categories
+    );
+});
+
+/**
+ * Register custom blocks.
+ *
+ * Each entry must expose static register() and registerFields() methods
+ * (the canonical pattern in app/Blocks/Hero.php). Add new blocks above
+ * the marker comment — `npm run make:block` does this automatically.
+ */
+$blocks = [
+    \App\Blocks\Hero::class,
+    // {{ make:block insertion point — do not remove }}
+];
+
+foreach ($blocks as $block) {
+    add_action('init', fn() => $block::register());
+    add_action('acf/init', fn() => $block::registerFields());
+}
 
 /**
  * Register the initial theme setup.
