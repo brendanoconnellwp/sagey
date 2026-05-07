@@ -86,6 +86,7 @@ add_filter('block_categories_all', function ($categories) {
 $blocks = [
     \App\Blocks\Hero::class,
     \App\Blocks\Section::class,
+    \App\Blocks\CardGrid::class,
     // {{ make:block insertion point — do not remove }}
 ];
 
