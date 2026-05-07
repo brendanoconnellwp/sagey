@@ -9,15 +9,12 @@
   ]));
 
   // Default template when the section is first inserted — gives editors a Hero
-  // to start with. Empty array allows full freedom; this opinion can be relaxed.
-  $template = [
-      ['sage/hero', []],
-  ];
-  $templateAttr = htmlspecialchars(wp_json_encode($template), ENT_QUOTES, 'UTF-8');
+  // to start with. Remove or change to taste; an empty array allows free composition.
+  $template = wp_json_encode([['sage/hero', []]]);
 @endphp
 
 <section {!! $anchor !!} class="{{ $classes }}">
   <div class="section__inner">
-    <InnerBlocks template="{{ $templateAttr }}" />
+    <InnerBlocks template="{{ $template }}" />
   </div>
 </section>
