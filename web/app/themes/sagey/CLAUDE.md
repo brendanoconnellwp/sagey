@@ -157,13 +157,14 @@ Editing tokens? Run `npm run tokens` (or any `npm run build`) and commit the res
 
 ## ACF Pro Block pattern (canonical: Hero)
 
-Every block has **four files**:
+Every block has **five files**:
 
 ```
 app/Blocks/Hero.php                    # PHP: register + fields + render
 resources/blocks/hero/block.json       # block metadata; ACF renderCallback points to Hero::render
 resources/views/blocks/hero.blade.php  # the actual HTML
 resources/scss/components/_hero.scss   # styles, forwarded by components/_index.scss
+tests/Theme/Blocks/HeroTest.php        # Pest render + registration test (in PROJECT root /tests, not theme)
 ```
 
 Registration is centralised in `app/setup.php` as a `$blocks` array:
@@ -201,7 +202,51 @@ All Sagey blocks register under the custom `sagey` block category (registered vi
 
 For a parent block that holds children (like Section), set `"supports": { "jsx": true }` in `block.json` and emit a literal `<InnerBlocks />` tag in the Blade view. Gutenberg/ACF replaces it with the rendered child blocks both in the editor preview and on the frontend.
 
-Optional `template=` and `templateLock=` attributes can pre-populate or constrain the children — Section uses a `template` to suggest a Hero on first insert.
+Optional `template=` and `templateLock=` attributes can pre-populate or constrain the children — Section uses a `template` to suggest a Hero on first insert. **Output the JSON for `template=` via `{{ wp_json_encode(...) }}`**, single Blade-escape only — manual `htmlspecialchars()` plus Blade's `{{ }}` double-encodes and breaks the editor preview.
+
+### Allowed-block list
+
+`app/setup.php` filters `allowed_block_types_all` to constrain the editor inserter on post-edit screens to:
+- All `sage/*` blocks (auto-detected from the registry on each filter run)
+- A curated set of core blocks (paragraph, heading, list, image, columns, etc.)
+
+Need to allow another core block? Add it to `$coreAllowed` in `setup.php`. Need to open the inserter on a specific CPT? Branch on `$editor_context->post->post_type` inside the filter.
+
+## Reusable Blade components
+
+### `<x-image>` — performant image rendering
+
+Wraps `wp_get_attachment_image()` so srcset, sizes, width, and height are emitted automatically. Always use this instead of writing raw `<img>` tags.
+
+```blade
+{{-- ACF "Image Array" return format (recommended) --}}
+<x-image :image="$acfImageField" sizes="(min-width: 768px) 50vw, 100vw" />
+
+{{-- Above-fold / LCP image --}}
+<x-image :image="$hero" loading="eager" fetchpriority="high" />
+
+{{-- Attachment ID or URL also work --}}
+<x-image :image="$id" size="medium_large" class="card__media" />
+```
+
+Defaults: `loading="lazy"`, `decoding="async"`, WP-default `sizes`. Override via props.
+
+## Tests
+
+Pest + Brain Monkey, no WordPress boot. Tests live at the **project root** under `tests/Theme/`, not inside the theme dir, so they share the root Pest config.
+
+```bash
+ddev composer test
+```
+
+Every block ships with a Pest test under `tests/Theme/Blocks/{Pascal}Test.php`. The make:block scaffolding generates one automatically — uses the canonical pattern from `HeroTest.php`:
+
+- Mock `get_field()` with `Brain\Monkey\Functions\expect()`
+- Mock the Blade `view()` call via the `mockView($name, $callback)` helper in `tests/Pest.php`
+- Assert the `$data` array forwarded to the view has the expected shape
+- Assert `register_block_type` fires on registration
+
+Brain Monkey requires Patchwork to load **before** Acorn defines `view()` — the test bootstrap (`tests/bootstrap.php`) handles this by requiring `vendor/antecedent/patchwork/Patchwork.php` first.
 
 ### Block render method
 

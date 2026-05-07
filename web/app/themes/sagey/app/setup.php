@@ -95,6 +95,49 @@ foreach ($blocks as $block) {
 }
 
 /**
+ * Constrain the editor inserter to a curated set: every sage/* block we
+ * register, plus the core blocks editors actually need for marketing pages.
+ * Keeps the inserter focused and prevents unsupported core blocks from
+ * landing in client content.
+ *
+ * To allow another core block, add it to $coreAllowed below.
+ * To open the inserter back up everywhere (e.g. for a custom CPT), add
+ * a check on $editor_context->post->post_type before applying the filter.
+ */
+add_filter('allowed_block_types_all', function ($allowed, $editor_context) {
+    // Outside a post-edit context (widget editor, navigation, etc.), leave defaults alone.
+    if (empty($editor_context->post)) {
+        return $allowed;
+    }
+
+    $coreAllowed = [
+        'core/paragraph',
+        'core/heading',
+        'core/list',
+        'core/list-item',
+        'core/image',
+        'core/gallery',
+        'core/video',
+        'core/buttons',
+        'core/button',
+        'core/columns',
+        'core/column',
+        'core/group',
+        'core/separator',
+        'core/spacer',
+        'core/quote',
+        'core/html',
+    ];
+
+    $sageBlocks = array_filter(
+        array_keys(\WP_Block_Type_Registry::get_instance()->get_all_registered()),
+        fn(string $name) => str_starts_with($name, 'sage/'),
+    );
+
+    return array_values(array_unique(array_merge($coreAllowed, $sageBlocks)));
+}, 10, 2);
+
+/**
  * Register the initial theme setup.
  *
  * @return void
