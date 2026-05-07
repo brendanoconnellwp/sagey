@@ -1,0 +1,72 @@
+@use "../abstracts" as *;
+
+.section {
+  // Width modifiers — outer is edge-to-edge, inner constrained
+  &--width-narrow .section__inner {
+    @include container($container-narrow);
+  }
+
+  &--width-default .section__inner {
+    @include container;
+  }
+
+  &--width-wide .section__inner {
+    @include container($container-wide);
+  }
+
+  &--width-full .section__inner {
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  // Background modifiers
+  &--bg-default {
+    background: $color-bg;
+    color: $color-fg;
+  }
+
+  &--bg-subtle {
+    background: $color-bg-subtle;
+    color: $color-fg;
+  }
+
+  &--bg-muted {
+    background: $color-bg-muted;
+    color: $color-fg;
+  }
+
+  &--bg-inverse {
+    background: $color-fg;
+    color: $color-bg;
+
+    a {
+      color: inherit;
+    }
+  }
+
+  // Vertical padding modifiers
+  &--pad-none {
+    padding-block: 0;
+  }
+
+  &--pad-sm {
+    padding-block: $space-8;
+  }
+
+  &--pad-md {
+    padding-block: $space-16;
+
+    @include respond-to(md) {
+      padding-block: $space-20;
+    }
+  }
+
+  &--pad-lg {
+    padding-block: $space-24;
+
+    @include respond-to(md) {
+      padding-block: $space-32;
+    }
+  }
+}

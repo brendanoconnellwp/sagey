@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "sage/section",
+  "title": "Section",
+  "description": "A page section with width, background, and padding controls. Holds any other blocks via InnerBlocks — use this as the layout container for marketing pages.",
+  "category": "sagey",
+  "icon": "layout",
+  "keywords": ["section", "row", "container", "wrapper"],
+  "textdomain": "sage",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "html": false,
+    "jsx": true
+  },
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "App\\Blocks\\Section::render"
+  }
+}
