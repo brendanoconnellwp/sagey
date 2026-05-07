@@ -20,29 +20,39 @@
     padding-inline: 0;
   }
 
-  // Background modifiers
+  // Background modifiers — colors flow through CSS custom properties so child
+  // blocks (Hero, Button, future blocks) automatically pick up the surface
+  // palette without needing to know about Section.
   &--bg-default {
-    background: $color-bg;
-    color: $color-fg;
+    background: var(--color-bg);
+    color: var(--color-fg);
   }
 
   &--bg-subtle {
-    background: $color-bg-subtle;
-    color: $color-fg;
+    background: var(--color-bg-subtle);
+    color: var(--color-fg);
   }
 
   &--bg-muted {
-    background: $color-bg-muted;
-    color: $color-fg;
+    background: var(--color-bg-muted);
+    color: var(--color-fg);
   }
 
+  // Inverse: re-bind the semantic color tokens to a dark palette in this scope.
+  // Any descendant using var(--color-*) inherits the inverted scheme.
   &--bg-inverse {
-    background: $color-fg;
-    color: $color-bg;
+    --color-bg: #{$neutral-950};
+    --color-fg: #{$neutral-0};
+    --color-muted: #{$neutral-400};
+    --color-muted-soft: #{$neutral-500};
+    --color-border: #{$neutral-700};
+    --color-border-strong: #{$neutral-600};
+    --color-accent: #{$neutral-0};
+    --color-accent-fg: #{$neutral-950};
+    --color-accent-hover: #{$neutral-200};
 
-    a {
-      color: inherit;
-    }
+    background: var(--color-bg);
+    color: var(--color-fg);
   }
 
   // Vertical padding modifiers

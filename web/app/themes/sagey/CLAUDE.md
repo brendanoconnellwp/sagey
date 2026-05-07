@@ -123,9 +123,14 @@ Tokens are defined **once** in `abstracts/_variables.scss` (Sass scalars) and **
 
 ### When to use SCSS variable vs CSS custom property
 
-- **In SCSS partials** — prefer `$color-fg`. Compile-time, supports Sass color functions (e.g. `color.adjust($color-accent, $lightness: 5%)`), survives static analysis.
-- **In runtime contexts** (block editor JS, dark-mode toggle, theme.json bridge, ad-hoc inline styles) — use `var(--color-fg)`. Same value, queryable and overridable at runtime.
-- **Components default to SCSS variables** — drop down to `var(--token)` only when runtime override is the actual goal.
+| Token type | Use | Why |
+|---|---|---|
+| **Colors** (`--color-*`, `--neutral-*`, `--accent-*`) | `var(--token)` in components | Layout containers like Section override them at the boundary (`--bg-inverse` rebinds the whole semantic palette) and child blocks inherit automatically. The dual-layer architecture only pays off if components use the runtime layer. |
+| **Spacing, radius, type sizes, breakpoints** (`$space-*`, `$radius-*`, `$text-*`, `$bp-*`) | `$variable` in components | These are compile-time concerns — Sass math/functions, no runtime override scenario. |
+| **Sass color manipulation** (`color.adjust($accent, ...)`) | `$variable` | Sass functions can't operate on `var()`. Use the SCSS variable, store result in a new variable or token. |
+| **Block editor JS / theme.json / inline runtime styles** | `var(--token)` | Queryable from JS; survives runtime palette changes. |
+
+**Practical rule:** "If an ancestor element might want to theme this, use `var()`." Colors yes (Section's inverse modifier proves it). Spacing no.
 
 ### Adding a new token
 
