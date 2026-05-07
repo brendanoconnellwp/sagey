@@ -10,6 +10,7 @@
     "prebuild": "node scripts/build-theme-json.mjs",
     "build": "vite build",
     "tokens": "node scripts/build-theme-json.mjs",
+    "make:block": "node scripts/make-block.mjs",
     "lint": "npm run lint:css && npm run lint:js && npm run format:check",
     "lint:css": "stylelint \"resources/scss/**/*.scss\"",
     "lint:css:fix": "stylelint \"resources/scss/**/*.scss\" --fix",
