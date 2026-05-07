@@ -35,15 +35,23 @@ const projectRoot = resolve(themeRoot, '../../../..');
 // ---- Argv ------------------------------------------------------------------
 
 const args = process.argv.slice(2);
-const positional = args.filter((a) => !a.startsWith('--'));
-const flags = Object.fromEntries(
-  args
-    .filter((a) => a.startsWith('--'))
-    .map((a, i, arr) => {
-      const [k, v] = a.replace(/^--/, '').split('=');
-      return v !== undefined ? [k, v] : [k, arr[i + 1] ?? true];
-    }),
-);
+const positional = [];
+const flags = {};
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (!a.startsWith('--')) {
+    positional.push(a);
+    continue;
+  }
+  const [k, inline] = a.replace(/^--/, '').split('=');
+  if (inline !== undefined) {
+    flags[k] = inline;
+  } else if (args[i + 1] !== undefined && !args[i + 1].startsWith('--')) {
+    flags[k] = args[++i];
+  } else {
+    flags[k] = true;
+  }
+}
 
 const kebab = positional[0];
 if (!kebab || !/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(kebab)) {
