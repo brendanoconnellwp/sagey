@@ -7,7 +7,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/build-theme-json.mjs",
     "build": "vite build",
+    "tokens": "node scripts/build-theme-json.mjs",
     "lint": "npm run lint:css && npm run lint:js && npm run format:check",
     "lint:css": "stylelint \"resources/scss/**/*.scss\"",
     "lint:css:fix": "stylelint \"resources/scss/**/*.scss\" --fix",

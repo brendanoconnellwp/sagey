@@ -1,14 +1,10 @@
 {
-  "__preprocessed__": "This file is used to build the theme.json file in the `public/build/assets` directory. The built artifact includes Tailwind's colors, fonts, and font sizes.",
+  "__preprocessed__": "Generated from resources/scss/abstracts/_variables.scss by scripts/build-theme-json.mjs. Run `npm run build` (or `npm run prebuild`) to regenerate.",
   "$schema": "https://schemas.wp.org/trunk/theme.json",
   "version": 3,
   "settings": {
-    "layout": {
-      "contentSize": "48rem"
-    },
-    "background": {
-      "backgroundImage": true
-    },
+    "layout": { "contentSize": "48rem" },
+    "background": { "backgroundImage": true },
     "color": {
       "custom": false,
       "customDuotone": false,
@@ -16,22 +12,108 @@
       "defaultDuotone": false,
       "defaultGradients": false,
       "defaultPalette": false,
-      "duotone": []
+      "duotone": [],
+      "palette": [
+        { "slug": "color-fg", "name": "Foreground", "color": "#0a0a0a" },
+        {
+          "slug": "color-fg-strong",
+          "name": "Foreground Strong",
+          "color": "#0a0a0a"
+        },
+        { "slug": "color-bg", "name": "Background", "color": "#fff" },
+        {
+          "slug": "color-bg-subtle",
+          "name": "Background Subtle",
+          "color": "#fafafa"
+        },
+        {
+          "slug": "color-bg-muted",
+          "name": "Background Muted",
+          "color": "#f5f5f5"
+        },
+        { "slug": "color-muted", "name": "Muted", "color": "#525252" },
+        {
+          "slug": "color-muted-soft",
+          "name": "Muted Soft",
+          "color": "#a3a3a3"
+        },
+        { "slug": "color-border", "name": "Border", "color": "#e5e5e5" },
+        {
+          "slug": "color-border-strong",
+          "name": "Border Strong",
+          "color": "#d4d4d4"
+        },
+        { "slug": "color-accent", "name": "Accent", "color": "#0a0a0a" },
+        {
+          "slug": "color-accent-fg",
+          "name": "Accent Foreground",
+          "color": "#fff"
+        },
+        { "slug": "neutral-0", "name": "Neutral 0", "color": "#fff" },
+        { "slug": "neutral-50", "name": "Neutral 50", "color": "#fafafa" },
+        { "slug": "neutral-100", "name": "Neutral 100", "color": "#f5f5f5" },
+        { "slug": "neutral-200", "name": "Neutral 200", "color": "#e5e5e5" },
+        { "slug": "neutral-300", "name": "Neutral 300", "color": "#d4d4d4" },
+        { "slug": "neutral-400", "name": "Neutral 400", "color": "#a3a3a3" },
+        { "slug": "neutral-500", "name": "Neutral 500", "color": "#737373" },
+        { "slug": "neutral-600", "name": "Neutral 600", "color": "#525252" },
+        { "slug": "neutral-700", "name": "Neutral 700", "color": "#404040" },
+        { "slug": "neutral-800", "name": "Neutral 800", "color": "#262626" },
+        { "slug": "neutral-900", "name": "Neutral 900", "color": "#171717" },
+        { "slug": "neutral-950", "name": "Neutral 950", "color": "#0a0a0a" },
+        { "slug": "accent-50", "name": "Accent 50", "color": "#f0fdf4" },
+        { "slug": "accent-100", "name": "Accent 100", "color": "#dcfce7" },
+        { "slug": "accent-200", "name": "Accent 200", "color": "#bbf7d0" },
+        { "slug": "accent-300", "name": "Accent 300", "color": "#86efac" },
+        { "slug": "accent-400", "name": "Accent 400", "color": "#4ade80" },
+        { "slug": "accent-500", "name": "Accent 500", "color": "#22c55e" },
+        { "slug": "accent-600", "name": "Accent 600", "color": "#16a34a" },
+        { "slug": "accent-700", "name": "Accent 700", "color": "#15803d" },
+        { "slug": "accent-800", "name": "Accent 800", "color": "#166534" },
+        { "slug": "accent-900", "name": "Accent 900", "color": "#14532d" },
+        { "slug": "accent-950", "name": "Accent 950", "color": "#052e16" }
+      ]
     },
     "custom": {
       "spacing": {},
-      "typography": {
-        "font-size": {},
-        "line-height": {}
-      }
+      "typography": { "font-size": {}, "line-height": {} }
     },
     "spacing": {
       "padding": true,
-      "units": ["px", "%", "em", "rem", "vw", "vh"]
+      "units": ["px", "%", "em", "rem", "vw", "vh"],
+      "spacingSizes": [
+        { "slug": "space-1", "name": "Space 1", "size": "0.25rem" },
+        { "slug": "space-2", "name": "Space 2", "size": "0.5rem" },
+        { "slug": "space-3", "name": "Space 3", "size": "0.75rem" },
+        { "slug": "space-4", "name": "Space 4", "size": "1rem" },
+        { "slug": "space-5", "name": "Space 5", "size": "1.25rem" },
+        { "slug": "space-6", "name": "Space 6", "size": "1.5rem" },
+        { "slug": "space-8", "name": "Space 8", "size": "2rem" },
+        { "slug": "space-10", "name": "Space 10", "size": "2.5rem" },
+        { "slug": "space-12", "name": "Space 12", "size": "3rem" },
+        { "slug": "space-16", "name": "Space 16", "size": "4rem" },
+        { "slug": "space-20", "name": "Space 20", "size": "5rem" },
+        { "slug": "space-24", "name": "Space 24", "size": "6rem" },
+        { "slug": "space-32", "name": "Space 32", "size": "8rem" },
+        { "slug": "space-40", "name": "Space 40", "size": "10rem" },
+        { "slug": "space-48", "name": "Space 48", "size": "12rem" }
+      ]
     },
     "typography": {
       "defaultFontSizes": false,
-      "customFontSize": false
+      "customFontSize": false,
+      "fontSizes": [
+        { "slug": "xs", "name": "XS", "size": "0.75rem" },
+        { "slug": "sm", "name": "SM", "size": "0.875rem" },
+        { "slug": "base", "name": "BASE", "size": "1rem" },
+        { "slug": "lg", "name": "LG", "size": "1.125rem" },
+        { "slug": "xl", "name": "XL", "size": "1.25rem" },
+        { "slug": "2xl", "name": "2XL", "size": "1.5rem" },
+        { "slug": "3xl", "name": "3XL", "size": "1.875rem" },
+        { "slug": "4xl", "name": "4XL", "size": "2.25rem" },
+        { "slug": "5xl", "name": "5XL", "size": "3rem" },
+        { "slug": "6xl", "name": "6XL", "size": "3.75rem" }
+      ]
     }
   }
 }
