@@ -170,6 +170,23 @@ cp /tmp/check.php web/check.php && ddev wp eval-file web/check.php; rm web/check
 ddev exec --dir /var/www/html/web/app/themes/sagey npm run build
 ```
 
+### Scaffold a new ACF Pro block
+
+```bash
+ddev exec --dir /var/www/html/web/app/themes/sagey \
+  npm run make:block -- <kebab-name> [--title "Display Title"]
+```
+
+Generates the four-file Hero-shaped pattern + registration. See the theme `CLAUDE.md` for the full convention. Always use this — don't hand-roll blocks.
+
+### Regenerate theme.json from SCSS tokens
+
+```bash
+ddev exec --dir /var/www/html/web/app/themes/sagey npm run tokens
+```
+
+Auto-fires before `npm run build`. Reads `resources/scss/abstracts/_variables.scss` and writes matching `settings.color.palette` / `spacing.spacingSizes` / `typography.fontSizes` into `theme.json` so the block editor's pickers match the SCSS scale.
+
 ### Lint PHP
 
 ```bash

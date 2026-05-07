@@ -135,6 +135,12 @@ Tokens are defined **once** in `abstracts/_variables.scss` (Sass scalars) and **
 
 Skip step 2 only for breakpoints (don't work in `@media`) and SCSS-only constructs.
 
+### Tokens flow into theme.json
+
+`scripts/build-theme-json.mjs` (run via `npm run tokens` or auto-fired as `prebuild` before `vite build`) reads `_variables.scss` and writes the same scale into `theme.json` `settings.color.palette`, `settings.spacing.spacingSizes`, and `settings.typography.fontSizes`. Result: the WordPress block editor's color picker, spacing dropdown, and font-size selector show the **same scale** as the SCSS — design fidelity stays consistent between code and editor.
+
+Editing tokens? Run `npm run tokens` (or any `npm run build`) and commit the resulting `theme.json` alongside the variable change. CI re-runs prebuild so a stale committed theme.json doesn't actually hurt, but committing in sync makes diffs cleaner.
+
 ### SCSS rules
 
 - One partial per component, named after it. Use BEM (`.hero`, `.hero__inner`, `.hero--align-center`).
@@ -155,14 +161,42 @@ resources/views/blocks/hero.blade.php  # the actual HTML
 resources/scss/components/_hero.scss   # styles, forwarded by components/_index.scss
 ```
 
-Registration (in `app/setup.php`):
+Registration is centralised in `app/setup.php` as a `$blocks` array:
 
 ```php
-add_action('init', fn () => \App\Blocks\Hero::register());
-add_action('acf/init', fn () => \App\Blocks\Hero::registerFields());
+$blocks = [
+    \App\Blocks\Hero::class,
+    \App\Blocks\Section::class,
+    // {{ make:block insertion point — do not remove }}
+];
 ```
 
-The Hero block is the canonical example. To add a new block, copy its four files, rename, and adjust fields. Do not invent a new pattern.
+Each entry must expose static `register()` and `registerFields()` — the canonical pattern in `Hero.php`. The marker comment is where `npm run make:block` inserts new entries.
+
+### Scaffolding a new block — always use `make:block`
+
+```
+npm run make:block -- <kebab-name> [--title "Display Title"]
+```
+
+Generates the four-file pattern, appends `@forward` to `components/_index.scss`, inserts the class into `setup.php`. Idempotent. Lint after with `npm run format && npm run lint && ddev composer lint`. **Don't hand-roll the four files** — the script encodes the conventions, hand-rolling drifts.
+
+### Block category
+
+All Sagey blocks register under the custom `sagey` block category (registered via `block_categories_all` filter in `app/setup.php`, prepended so it appears at the top of the inserter). The make:block scaffolding sets `"category": "sagey"` automatically. Don't put theme blocks under `design`, `text`, etc. — keep the namespace clean.
+
+### Two canonical block shapes
+
+| Block | Role | Pattern to copy |
+|---|---|---|
+| **Hero** (`sage/hero`) | Leaf content block — heading, subheading, CTA. | Copy when building a new content block. |
+| **Section** (`sage/section`) | Layout container with width/background/padding. Holds InnerBlocks. | Copy when building a new layout/wrapper block. |
+
+### InnerBlocks (parent blocks)
+
+For a parent block that holds children (like Section), set `"supports": { "jsx": true }` in `block.json` and emit a literal `<InnerBlocks />` tag in the Blade view. Gutenberg/ACF replaces it with the rendered child blocks both in the editor preview and on the frontend.
+
+Optional `template=` and `templateLock=` attributes can pre-populate or constrain the children — Section uses a `template` to suggest a Hero on first insert.
 
 ### Block render method
 
