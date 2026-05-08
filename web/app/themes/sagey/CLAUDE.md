@@ -212,6 +212,45 @@ Optional `template=` and `templateLock=` attributes can pre-populate or constrai
 
 Need to allow another core block? Add it to `$coreAllowed` in `setup.php`. Need to open the inserter on a specific CPT? Branch on `$editor_context->post->post_type` inside the filter.
 
+## Custom Post Types
+
+CPTs follow the same conventions as blocks: PHP-registered, no JSON sync, scaffolded.
+
+```
+ddev exec --dir /var/www/html/web/app/themes/sagey \
+  npm run make:cpt -- <kebab-name> [--singular "Singular"] [--plural "Plural"]
+```
+
+Generates **six files**:
+
+```
+app/PostTypes/{Pascal}.php                            # register + ACF fields
+resources/views/single-{kebab}.blade.php              # single template
+resources/views/archive-{kebab}.blade.php             # archive template
+resources/views/partials/content-{kebab}.blade.php    # archive list item, uses <x-image>
+resources/scss/components/_{kebab}-archive.scss       # archive styles
+tests/Theme/PostTypes/{Pascal}Test.php                # registration + ACF binding test
+```
+
+And mutates:
+
+- `resources/scss/components/_index.scss` — appends `@forward "{kebab}-archive";`
+- `app/setup.php` — inserts `\App\PostTypes\{Pascal}::class,` into the `$postTypes` array before its marker comment
+
+After scaffolding, run `ddev wp rewrite flush` so the new permalink takes effect, then visit `/{kebab}/` for the archive and the admin's "{Plural}" menu item.
+
+The `$postTypes` array is empty by default — add CPTs only as a project actually needs them. The class-array iteration calls `register()` on `init` and `registerFields()` on `acf/init`, mirroring the blocks pattern.
+
+### CPT defaults the scaffold ships with
+
+- `public: true`, `has_archive: true`, `show_in_rest: true`
+- `supports`: title, editor, thumbnail, excerpt
+- `menu_icon: dashicons-portfolio`, `menu_position: 20`
+- ACF field group with one `summary` textarea (a starting point — extend as needed)
+- Rewrite slug = the kebab CPT name, `with_front: false`
+
+Customize the generated `app/PostTypes/{Pascal}.php` for project-specific labels, supports, taxonomies, REST visibility, etc.
+
 ## Reusable Blade components
 
 ### `<x-image>` — performant image rendering

@@ -179,6 +179,18 @@ ddev exec --dir /var/www/html/web/app/themes/sagey \
 
 Generates the four-file Hero-shaped pattern + registration. See the theme `CLAUDE.md` for the full convention. Always use this — don't hand-roll blocks.
 
+### Scaffold a new Custom Post Type
+
+```bash
+ddev exec --dir /var/www/html/web/app/themes/sagey \
+  npm run make:cpt -- <kebab-name> [--singular "Singular"] [--plural "Plural"]
+
+# Then flush rewrites so the archive URL works:
+ddev wp rewrite flush
+```
+
+Generates the six-file CPT pattern (class, single/archive/content templates, archive SCSS, Pest test) and inserts the class into the `$postTypes` array in `setup.php`. See the theme `CLAUDE.md` for the full convention.
+
 ### Regenerate theme.json from SCSS tokens
 
 ```bash

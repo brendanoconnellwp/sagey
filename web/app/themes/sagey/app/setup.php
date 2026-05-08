@@ -96,6 +96,23 @@ foreach ($blocks as $block) {
 }
 
 /**
+ * Register custom post types.
+ *
+ * Same convention as $blocks above. Each entry must expose static
+ * register() and registerFields() methods. `npm run make:cpt` inserts
+ * new entries before the marker.
+ */
+/** @var list<class-string> $postTypes — populated by `npm run make:cpt` */
+$postTypes = [
+    // {{ make:cpt insertion point — do not remove }}
+];
+
+foreach ($postTypes as $postType) {
+    add_action('init', fn() => $postType::register());
+    add_action('acf/init', fn() => $postType::registerFields());
+}
+
+/**
  * Constrain the editor inserter to a curated set: every sage/* block we
  * register, plus the core blocks editors actually need for marketing pages.
  * Keeps the inserter focused and prevents unsupported core blocks from
